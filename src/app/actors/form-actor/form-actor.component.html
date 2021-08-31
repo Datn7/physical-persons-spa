@@ -1,0 +1,26 @@
+<form (submit)="saveChanges()" [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>სახელი*</mat-label>
+    <input formControlName="name" matInput />
+    <mat-error>სახელის შეყვანა აუცილებელია</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>დაბადების თარიღი</mat-label>
+    <input formControlName="dateOfBirth" matInput [matDatepicker]="picker" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <h4>აირჩიეთ სურათი*</h4>
+  <app-input-img
+    [urlCurrentImage]="model?.picture"
+    (onImageSelected)="onImageSelected($event)"
+  ></app-input-img>
+
+  <div>
+    <button mat-flat-button color="primary" [disabled]="form.invalid">
+      შენახვა
+    </button>
+    <a mat-stroked-button routerLink="/actors">უკან</a>
+  </div>
+</form>

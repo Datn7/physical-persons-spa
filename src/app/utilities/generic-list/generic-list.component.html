@@ -1,0 +1,10 @@
+<!-- <img
+  *ngIf="!list"
+  src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+/> -->
+
+<div *ngIf="list?.length === 0">ვიდეოები არ იძებნება</div>
+
+<ng-container *ngIf="list && list.length > 0">
+  <ng-content select="[content]"></ng-content>
+</ng-container>

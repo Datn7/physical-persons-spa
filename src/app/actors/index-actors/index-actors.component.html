@@ -1,0 +1,42 @@
+<h2>ფიზიკური პირები</h2>
+<button mat-flat-button color="primary" routerLink="/actors/create">
+  ახლის დამატება
+</button>
+
+<app-generic-list [list]="actors">
+  <ng-container content>
+    <table mat-table [dataSource]="actors" class="mat-elevation-z8 table-index">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef><b>სახელი</b></th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>ქმედებები</th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            routerLink="/actors/edit/{{ element.id }}"
+            mat-flat-button
+            color="primary"
+            >შეცვლა</a
+          >
+          <button mat-flat-button color="warn" (click)="delete(element.id)">
+            წაშლა
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      [length]="totalAmountOfRecords"
+      [pageSize]="pageSize"
+      (page)="updaetPagination($event)"
+    >
+    </mat-paginator>
+  </ng-container>
+</app-generic-list>

@@ -1,0 +1,363 @@
+<div class="card">
+  <div class="card-header">რეგისტრაცია!</div>
+
+  <div class="card-body">
+    <form novalidate (ngSubmit)="save()" [formGroup]="customerForm">
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="firstNameId">სახელი</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="firstNameId"
+            type="text"
+            placeholder="სახელი (აუცილებელია)"
+            formControlName="firstName"
+            [ngClass]="{
+              'is-invalid':
+                (customerForm.get('firstName')?.touched ||
+                  customerForm.get('firstName')?.dirty) &&
+                !customerForm.get('firstName')?.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="customerForm.get('firstName')?.errors?.required">
+              გთხოვთ შეიყვანეთ თქვენი სახელი.
+            </span>
+            <span *ngIf="customerForm.get('firstName')?.errors?.minlength">
+              სახელი უნდა შეიცავდეს მინიმუმ 3 სიმბოლოს.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="lastNameId">გვარი</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="lastNameId"
+            type="text"
+            placeholder="გვარი (აუცილებელია)"
+            formControlName="lastName"
+            [ngClass]="{
+              'is-invalid':
+                (customerForm.get('lastName')?.touched ||
+                  customerForm.get('lastName')?.dirty) &&
+                !customerForm.get('lastName')?.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="customerForm.get('lastName')?.errors?.required">
+              გთხოვთ შეიყვანეთ თქვენი გვარი.
+            </span>
+            <span *ngIf="customerForm.get('lastName')?.errors?.maxlength">
+              გვარი უნდა შეიცავდეს 50 სიმბოლოზე ნაკლებს.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div formGroupName="emailGroup">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="emailId">ელ. ფოსტა</label>
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="emailId"
+              type="email"
+              placeholder="ელ. ფოსტა (აუცილებელია)"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  customerForm.get('emailGroup')?.errors ||
+                  ((customerForm.get('emailGroup.email')?.touched ||
+                    customerForm.get('emailGroup.email')?.dirty) &&
+                    !customerForm.get('emailGroup.email')?.valid)
+              }"
+            />
+            <span class="invalid-feedback">
+              <span
+                *ngIf="customerForm.get('emailGroup.email')?.errors?.required"
+              >
+                გთხოვ შეიყვანეთ თქვენი ელ. ფოსტა.
+              </span>
+              <span *ngIf="customerForm.get('emailGroup.email')?.errors?.email">
+                გთხოვთ შეიყვანეთ სწორი ელ. ფოსტა.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="confirmEmailId"
+            >დაადასტურეთ ელ.ფოსტა</label
+          >
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="confirmEmailId"
+              type="email"
+              placeholder="დაადასტურეთ ელ.ფოსტა (აუცილებელია)"
+              formControlName="confirmEmail"
+              [ngClass]="{
+                'is-invalid':
+                  customerForm.get('emailGroup')?.errors ||
+                  ((customerForm.get('emailGroup.confirmEmail')?.touched ||
+                    customerForm.get('emailGroup.confirmEmail')?.dirty) &&
+                    !customerForm.get('emailGroup.confirmEmail')?.valid)
+              }"
+            />
+            <span class="invalid-feedback">
+              <span
+                *ngIf="
+                  customerForm.get('emailGroup.confirmEmail')?.errors?.required
+                "
+              >
+                გთხოვთ დაადასტურეთ თქვენი ელ.ფოსტა.
+              </span>
+              <span *ngIf="customerForm.get('emailGroup')?.errors?.match">
+                ელ.ფოსტები არ ემთხვევა ერთმანეთს.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="phoneId">ტელეფონი</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="phoneId"
+            type="tel"
+            placeholder="ტელეფონი"
+            formControlName="phone"
+            [ngClass]="{ 'is-invalid': !customerForm.get('phone')?.valid }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="customerForm.get('phone')?.errors?.required">
+              გთხოვთ შეიყვანეთ თქვენი ტელეფონის ნომერი.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label pt-0"
+          >გამოაგზავნეთ შეტყობინებები</label
+        >
+        <div class="col-md-8">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="radio"
+                value="email"
+                formControlName="notification"
+                (click)="setNotification('email')"
+              />ელ.ფოსტა
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="radio"
+                value="text"
+                formControlName="notification"
+                (click)="setNotification('phone')"
+              />ტექსტი
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ratingId">რეიტინგი</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="ratingId"
+            type="number"
+            formControlName="rating"
+            [ngClass]="{
+              'is-invalid':
+                (customerForm.get('rating')?.touched ||
+                  customerForm.get('rating')?.dirty) &&
+                !customerForm.get('rating')?.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="customerForm.get('rating')?.errors?.range">
+              შეაფასეთ თქვენი გამოცდილება 1დან 5მდე.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <div class="col-md-8">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                id="sendCatalogId"
+                type="checkbox"
+                formControlName="sendCatalog"
+              />
+              გამოაგზავნეთ თქვენი კატალოგი
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        <div *ngIf="customer.sendCatalog">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label pt-0">მისამართის ტიპი</label>
+          <div class="col-md-8">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  id="addressType1Id"
+                  type="radio"
+                  value="home"
+                  [(ngModel)]="customer.addressType"
+                  name="addressType"
+                />
+                სახლი
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  id="addressType1Id"
+                  type="radio"
+                  value="work"
+                  [(ngModel)]="customer.addressType"
+                  name="addressType"
+                />
+                სამსახური
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  id="addressType1Id"
+                  type="radio"
+                  value="other"
+                  [(ngModel)]="customer.addressType"
+                  name="addressType"
+                />
+                სხვა
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="street1Id"
+            >ქუჩის მისამართი 1</label
+          >
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="street1Id"
+              type="text"
+              placeholder="ქუჩის მისამართი"
+              [(ngModel)]="customer.street1"
+              name="street1"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="street2Id"
+            >ქუჩის მისამართი 2</label
+          >
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="street2Id"
+              type="text"
+              placeholder="ქუჩის მისამართი (მეორე ხაზი)"
+              [(ngModel)]="customer.street2"
+              name="street2"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="cityId"
+            >ქალაქი, შტატი, ზიპ კოდი</label
+          >
+          <div class="col-md-3">
+            <input
+              class="form-control"
+              id="cityId"
+              type="text"
+              placeholder="ქალაქი"
+              [(ngModel)]="customer.city"
+              name="city"
+            />
+          </div>
+          <div class="col-md-3">
+            <select
+              class="form-control"
+              id="stateId"
+              [(ngModel)]="customer.state"
+              name="state"
+            >
+              <option value="" disabled selected hidden>
+                აირჩიეთ შტატი...
+              </option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input
+              class="form-control"
+              id="zipId"
+              type="number"
+              placeholder="ზიპ კოდი"
+              [(ngModel)]="customer.zip"
+              name="zip"
+            />
+          </div>
+        </div>
+      </div>
+     -->
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button
+            class="btn btn-primary mr-3"
+            type="submit"
+            style="width: 80px"
+            [title]="
+              customerForm.valid
+                ? 'Save your entered data'
+                : 'Disabled until the form data is valid'
+            "
+            [disabled]="!customerForm.valid"
+          >
+            შენახვა
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<br />Dirty: {{ customerForm.dirty }} <br />Touched: {{ customerForm.touched }}
+<br />Valid: {{ customerForm.valid }} <br />Value:
+{{ customerForm.value | json }}

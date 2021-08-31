@@ -1,0 +1,98 @@
+<!-- template forms need ngform reference variable and ngmodel and name in inputs, name represents
+  variable name, use [()] banan in the box to create two way binding and fill form-->
+
+<div class="container">
+  <h2>მომხმარებლის პარამეტრები</h2>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="form-group">
+      <label for="name">სახელი</label>
+      <input
+        id="name"
+        name="name"
+        class="form-control"
+        [(ngModel)]="userSettings.name"
+      />
+    </div>
+
+    <div class="form-check form-group">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="emailOffers"
+        name="emailOffers"
+        [(ngModel)]="userSettings.emailOffers"
+      />
+      <label class="form-check-label" for="emailOffers">
+        სპეციალური შეთავაზებები მეილით
+      </label>
+    </div>
+
+    <p>ვიზუალური სტილი</p>
+    <div class="form-group">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="lightInterface"
+          value="light"
+          checked
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+        <label class="form-check-label" for="lightInterface"> ღია </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="mediumInterface"
+          value="medium"
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+        <label class="form-check-label" for="mediumInterface"> საშუალო </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="darkInterface"
+          value="dark"
+          [(ngModel)]="userSettings.interfaceStyle"
+        />
+        <label class="form-check-label" for="darkInterface"> ბნელი </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="subscriptionType">გამოწერის ტიპი</label>
+      <select
+        class="form-control"
+        id="subscriptionType"
+        name="subscriptionType"
+        [(ngModel)]="userSettings.subscriptionType"
+      >
+        <option>თვიური</option>
+        <option>წლიური</option>
+        <option>სამუდამო</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">ჩანაწერები</label>
+      <textarea
+        id="notes"
+        name="notes"
+        class="form-control"
+        rows="3"
+        [(ngModel)]="userSettings.notes"
+      ></textarea>
+    </div>
+
+    <button class="btn btn-primary" id="send">გაგზავნა</button>
+  </form>
+</div>
+
+{{ form.value | json }}
